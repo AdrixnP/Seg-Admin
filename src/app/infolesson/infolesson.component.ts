@@ -4,10 +4,7 @@ import { ApiService } from '../services/api.service';  // Importa tu ApiService
 
 @Component({
   selector: 'app-infolesson',
-  standalone: true,
-  imports: [],
   templateUrl: './infolesson.component.html',
-  styleUrls: ['./infolesson.component.css'],
 })
 export class InfolessonComponent implements OnInit {
   lessonId!: string;
