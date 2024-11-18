@@ -1,0 +1,350 @@
+/* Root Variables */
+:root {
+  --primary-color: #0094c6;
+  --secondary-color: #005e7c;
+  --tertiary-color: #001242;
+
+  --black: #000000;
+  --white: #ffffff;
+
+  --text-color: #2f2f2f;
+  --alttext-color: #dadada;
+  --bold-text: #1a1a1a;
+  --bold-alttext: #f5f5f5;
+
+  --alert-color: #ff4400;
+  --extra-color1: #000022;
+  --extra-color2: #040f16;
+}
+
+/* General Styles */
+body, html {
+  margin: 0;
+  font-family: Arial, sans-serif; /* Fuente legible */
+  height: 100%; /* Asegura que el body ocupe toda la altura de la página */
+  display: flex;
+  flex-direction: column; /* Hace que los elementos hijos se acomoden en una columna */
+  overflow-x: hidden; /* Evita el scroll horizontal innecesario */
+}
+
+h1 {
+  font-size: 48px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+a {
+  text-decoration: none; /* Elimina el subrayado */
+  color: inherit; /* Hereda el color del elemento padre */
+}
+
+.container {
+  display: flex;
+  flex: 1; /* Asegura que el contenedor principal ocupe toda la altura restante */
+  flex-direction: row; /* Alinea los elementos en una fila */
+  height: 100%;
+  overflow: hidden; /* Elimina el scroll de la página */
+}
+
+h2 {
+  margin-top: 20px; /* Margen superior para el título */
+}
+
+/* Button Styles */
+button {
+  padding: 6px 8px;
+  font-size: 14px;
+  border: none;
+  background-color: var(--tertiary-color);
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: var(--tertiary-color);
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Header Styles */
+header {
+  background-color: var(--primary-color);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between; /* Espacio entre los elementos */
+  align-items: center;            /* Centra los elementos verticalmente */
+  height: 80px;                   /* Altura del header */
+  color: white;
+  z-index: 1000;                  /* Para asegurarse de que el header esté por encima */
+  width: 100%;                    /* Asegura que el header ocupe todo el ancho de la pantalla */
+}
+
+/* Contenedor de acciones dentro del header */
+.header-actions {
+  display: flex;
+  justify-content: flex-end;  /* Alinea los elementos (input y botones) a la derecha */
+  align-items: center;        /* Centra los elementos verticalmente */
+  gap: 16px;                  /* Espacio entre los botones */
+  margin-right: 64px;         /* Agrega espacio extra a la derecha */
+}
+
+/* Input dentro de header-actions */
+.header-actions input {
+  padding: 8px;
+  font-size: 14px;
+  margin-left: 10px;           /* Espacio entre el input y los botones */
+  max-width: 250px;            /* Limita el tamaño máximo del input */
+  width: 100%;                 /* Hace que el input ocupe todo el ancho disponible */
+  border-radius: 4px;          /* Borde redondeado para el input */
+}
+
+/* Botones dentro de header-actions */
+.header-actions button {
+  background: none;
+  border: none;
+  padding: 8px 2px;
+  font-size: 14px;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;          /* Borde redondeado para los botones */
+}
+
+/* Estilo para los botones al pasar el mouse */
+.header-actions button:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Fondo semitransparente al pasar el ratón */
+}
+
+/* Para las imágenes dentro de los botones */
+.header-actions button img {
+  width: 64px;
+  height: 64px;
+}
+
+/* Si tienes un contenedor para los elementos del header */
+.header-container {
+  display: flex;
+  justify-content: space-between;  /* Asegura que los elementos estén en los extremos */
+  align-items: center;            /* Centra los elementos verticalmente */
+  padding: 32px;
+}
+
+/* Navigation Styles */
+nav {
+  background-color: var(--secondary-color);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 128px; /* Ancho fijo del nav */
+  height: calc(100vh - 80px);
+  overflow: hidden; /* Elimina cualquier scroll en el nav */
+}
+
+#navigation ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#navigation ul li {
+  width: 100%;
+  margin-bottom: 10px; /* Espacio entre los botones */
+}
+
+.nav-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Alinea los iconos y el texto a la izquierda */
+  width: 100%;
+  padding: 16px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: white;
+}
+
+.nav-button img {
+  margin-right: 10px; /* Espacio entre la imagen y el texto */
+}
+
+.nav-button span {
+  display: inline-block;
+  white-space: nowrap; /* Impide que el texto se divida */
+}
+
+.nav-button:hover {
+  background-color: var(--tertiary-color); /* Cambia el fondo cuando el botón es hoverizado */
+}
+
+/* Main Container */
+main {
+  flex: 1;
+  margin-left: 16px; /* Asegura que el contenido principal no quede debajo del nav */
+  padding: 8px;
+  overflow-y: auto; /* Permite el scroll solo si es necesario */
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+table th, table td {
+  padding: 5px;
+  text-align: left;
+  border: 1px solid #ddd;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+table tr {
+  height: 30px;
+}
+
+table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+table th span {
+  margin-left: 5px;
+}
+
+thead {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+tbody {
+  display: block;
+  overflow-y: auto;
+  max-height: 540px;
+}
+
+tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* Form Styles */
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 225px;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input, select {
+  padding: 4px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button[type="submit"] {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  background-color: var(--secondary-color);
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+button[type="submit"]:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Action Buttons (Edit, Delete) */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* Flex Layout for Main Table */
+.main-container {
+  display: flex;
+}
+
+.table-container {
+  margin: 1px;
+  flex: 1;
+}
+
+.left {
+  flex: 1;
+}
+
+.right-tables {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Make rows thinner */
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container th, .table-container td {
+  padding: 4px;
+  font-size: 12px;
+  text-align: left;
+}
+
+.table-container tr {
+  height: 30px;
+}
+
+.left-table, .right-table {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Styling for the Table Container */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.data-table:not(.main-table) {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.main-table {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.data-table th {
+  background-color: #f2f2f2;
+}

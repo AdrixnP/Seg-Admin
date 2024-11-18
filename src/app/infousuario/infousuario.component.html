@@ -1,0 +1,145 @@
+<div>
+  <h2>Información del Usuario</h2>
+  <p><strong>ID Universitario:</strong> {{ formUser.uniId }}</p>
+  <p><strong>Nombre:</strong> {{ formUser.firstName }} {{ formUser.lastName }}</p>
+  <p><strong>Email:</strong> {{ formUser.email }}</p>
+</div>
+
+<!-- Formulario para asignar una lección -->
+<div>
+  <h2>Asignar Lección al Usuario</h2>
+  <form (ngSubmit)="assignLessonToUser()">
+    <div>
+      <label for="lesson">Seleccionar Lección:</label>
+      <select [(ngModel)]="selectedLessonId" name="lesson" required>
+        <option *ngFor="let lesson of filteredLessons" [value]="lesson.id">
+          {{ lesson.subjectLesson.name }} ({{ lesson.subjectLesson.nrc }}) - {{ lesson.dayWeek }} [{{ lesson.startTime }} a {{ lesson.endTime }}]
+        </option>
+      </select>
+    </div>
+
+    <div>
+      <button type="submit" [disabled]="!selectedLessonId">Asignar Lección</button>
+    </div>
+  </form>
+</div>
+
+<!-- Tabla de Lecciones -->
+<div>
+  <h2>Lecciones del Usuario</h2>
+  <table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Lección</th>
+        <th>Día</th>
+        <th>Hora de Inicio</th>
+        <th>Hora de Fin</th>
+        <th>Aula</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let lesson of formUser.lessonSetHas">
+        <td>{{ lesson.subjectLesson.name }}</td>
+        <td>{{ lesson.dayWeek }}</td>
+        <td>{{ lesson.startTime }}</td>
+        <td>{{ lesson.endTime }}</td>
+        <td>{{ lesson.classroomLesson ? lesson.classroomLesson.name : 'No asignado' }}</td>
+        <td><button (click)="removeLessonFromUser(lesson.id)">Eliminar</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div>
+  <h2>
+    {{ selectedReservation ? 'Actualizar Reserva' : 'Crear Nueva Reserva' }}
+    <span *ngIf="selectedReservation" class="alert-warning" style="font-size: 14px; color: #001242; margin-left: 10px;">
+      (No puedes cambiar el salón. Si deseas cambiarlo, crea una nueva reserva.)
+    </span>
+  </h2>
+
+  <form (ngSubmit)="selectedReservation ? onUpdateReservation() : onCreateReservation()" #reservationForm="ngForm">
+    <!-- Fecha de la reserva -->
+    <div class="form-row">
+      <label for="reservationDate">Fecha de la reserva:</label>
+      <input
+        type="date"
+        id="reservationDate"
+        [(ngModel)]="reservationData.reservationDate"
+        name="reservationDate"
+        required
+      />
+    </div>
+
+    <!-- Hora de inicio -->
+    <div class="form-row">
+      <label for="startTime">Hora de inicio:</label>
+      <input
+        type="time"
+        id="startTime"
+        [(ngModel)]="reservationData.startTime"
+        name="startTime"
+        required
+      />
+    </div>
+
+    <!-- Hora de fin -->
+    <div class="form-row">
+      <label for="endTime">Hora de finalización:</label>
+      <input
+        type="time"
+        id="endTime"
+        [(ngModel)]="reservationData.endTime"
+        name="endTime"
+        required
+      />
+    </div>
+
+    <!-- Selector de salón -->
+    <div class="form-row">
+      <label for="classroom">Seleccionar salón:</label>
+      <select id="classroom" [(ngModel)]="selectedClassroomId" name="classroomId" required>
+        <option *ngFor="let classroom of classrooms" [value]="classroom.id">
+          {{ classroom.name }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="form-actions">
+      <button type="submit" [disabled]="!reservationForm.valid" style="margin-right: 10px;">
+        {{ selectedReservation ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button type="button" (click)="resetForm()">Cancelar</button>
+    </div>
+  </form>
+</div>
+
+<!-- Tabla de Reservas -->
+<div>
+  <h2>Reservas del Usuario</h2>
+  <table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Hora de Inicio</th>
+        <th>Hora de Fin</th>
+        <th>Aula</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reservation of formUser.reservationSetHash">
+        <td>{{ reservation.reservationDate }}</td>
+        <td>{{ reservation.startTime }}</td>
+        <td>{{ reservation.endTime }}</td>
+        <td>{{ reservation.classroomReservation?.name || 'No asignado' }}</td>
+        <td>
+          <button (click)="onSelectReservation(reservation)">Editar</button>
+          <button (click)="onDeleteReservation(reservation.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

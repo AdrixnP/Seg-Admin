@@ -1,0 +1,43 @@
+<div class="main-summary-container">
+  <h2>Resumen de Lecciones de Hoy</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Hora de Inicio</th>
+        <th>Hora de Fin</th>
+        <th>Asignatura</th>
+        <th>Salón</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let lesson of lessons">
+        <td>{{ lesson.startTime}}</td>
+        <td>{{ lesson.endTime}}</td>
+        <td>{{ lesson.subjectLesson.name}} ({{ lesson.subjectLesson?.nrc}})</td>
+        <td>{{ lesson.classroomLesson.name}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Resumen de Reservas de Hoy</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Hora de Inicio</th>
+        <th>Hora de Fin</th>
+        <th>Salon</th>
+        <th>Anfitrión</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reservation of reservations">
+        <td>{{ reservation.startTime}}</td>
+        <td>{{ reservation.endTime}}</td>
+        <td>{{ reservation.classroomReservation?.name || "nulo"}} ({{ reservation.classroomReservation?.capacity || 'Nulo' }} personas)</td>
+        <td *ngFor="let user of reservation.userSetHash">
+              {{ user.uniId }} - {{ user.firstName}} {{ user.lastName}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

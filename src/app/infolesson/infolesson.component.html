@@ -1,0 +1,43 @@
+<div class="lesson-details">
+  <h2>Detalles de la Lección</h2>
+  <p><strong>ID de Lección:</strong> {{ lessonDetails?.id }}</p>
+  <p><strong>Día de la Semana:</strong> {{ lessonDetails?.dayWeek }}</p>
+  <p><strong>Hora de Inicio:</strong> {{ lessonDetails?.startTime}}</p>
+  <p><strong>Hora de Fin:</strong> {{ lessonDetails?.endTime}}</p>
+  <p><strong>Materia:</strong> {{ lessonDetails?.subjectLesson?.name }} (NRC: {{ lessonDetails?.subjectLesson?.nrc }})</p>
+  <p><strong>Aula:</strong> {{ lessonDetails?.classroomLesson?.name }} (Capacidad: {{ lessonDetails?.classroomLesson?.capacity }})</p>
+
+  <div>
+    <h2>Lista de usuarios ({{ users.length }})</h2> <!-- Muestra la cantidad de usuarios -->
+    <table border="1" cellpadding="5" cellspacing="0">
+      <thead>
+        <tr>
+          <th>
+            ID Universitario
+          </th>
+          <th>
+            Rol
+          </th>
+          <th>
+            Nombre
+          </th>
+          <th>
+            Apellido
+          </th>
+          <th>
+            Correo Electrónico
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.uniId }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.lastName }}</td>
+          <td>{{ user.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

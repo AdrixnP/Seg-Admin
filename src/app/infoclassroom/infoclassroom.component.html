@@ -1,0 +1,80 @@
+<div *ngIf="classroomInfo; else loading">
+  <h2>{{ classroomInfo.name }}</h2>
+  <p>Capacidad: {{ classroomInfo.capacity }}</p>
+</div>
+<ng-template #loading>
+  <p>Cargando información del salón...</p>
+</ng-template>
+
+<div>
+  <label for="lesson">Seleccionar Lección:</label>
+  <select [(ngModel)]="selectedLessonId" name="lesson" required>
+    <option *ngFor="let lesson of lessons" [value]="lesson.id">
+      {{ lesson.subjectLesson.name }} ({{ lesson.subjectLesson.nrc }}) -
+      {{ lesson.dayWeek }} [{{ lesson.startTime }} a {{ lesson.endTime }}]
+      - Aula: {{ lesson.classroomLesson?.name || 'Aula no asignada' }}
+    </option>
+  </select>
+</div>
+
+<div>
+  <button type="button" [disabled]="!selectedLessonId" (click)="assignClassroomToLesson(selectedLessonId ?? 0)">
+    Asignar Lección
+  </button>
+</div>
+
+<div>
+  <h2>Lecciones del Salón</h2>
+  <table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Lección</th>
+        <th>Día</th>
+        <th>Hora de Inicio</th>
+        <th>Hora de Fin</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Usamos ng-container para aplicar ngIf de manera correcta -->
+      <ng-container *ngFor="let lesson of lessons">
+        <tr *ngIf="lesson.classroomLesson && lesson.classroomLesson.name === classroomInfo?.name">
+          <td>{{ lesson.subjectLesson.name }} ({{ lesson.subjectLesson.nrc }})</td>
+          <td>{{ lesson.dayWeek }}</td>
+          <td>{{ lesson.startTime }}</td>
+          <td>{{ lesson.endTime }}</td>
+          <td>
+            <button *ngIf="lesson.classroomLesson" (click)="removeClassroomFromLesson(lesson.id)">
+              Eliminar Aula
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+
+<h3>Reservas del Salón</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Hora de Inicio</th>
+      <th>Hora de Fin</th>
+      <th>Salón</th>
+      <th>Anfitrión</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let reservation of reservations">
+      <td>{{ reservation.reservationDate }}</td>
+      <td>{{ reservation.startTime}}</td>
+      <td>{{ reservation.endTime}}</td>
+      <td>{{ reservation.classroomReservation?.name || "nulo"}} ({{ reservation.classroomReservation?.capacity || 'Nulo'
+        }} personas)</td>
+      <td *ngFor="let user of reservation.userSetHash">
+        {{ user.uniId }} - {{ user.firstName}} {{ user.lastName}}
+      </td>
+    </tr>
+  </tbody>
+</table>

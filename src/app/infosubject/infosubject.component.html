@@ -1,0 +1,81 @@
+<div *ngIf="subjectInfo">
+  <h2>{{ subjectInfo.name }} ({{ subjectInfo.nrc }})</h2>
+</div>
+
+<div>
+  <h2>{{ selectedLesson ? 'Actualizar Lección' : 'Crear Nueva Lección' }}</h2>
+  <form (ngSubmit)="selectedLesson ? onUpdateLesson() : onCreateLesson()" #lessonForm="ngForm">
+    <!-- Día de la semana -->
+    <div class="form-row">
+      <label for="dayWeek">Día de la semana:</label>
+      <select id="dayWeek" [(ngModel)]="newLesson.dayWeek" name="dayWeek" required>
+        <option value="MONDAY">Lunes</option>
+        <option value="TUESDAY">Martes</option>
+        <option value="WEDNESDAY">Miércoles</option>
+        <option value="THURSDAY">Jueves</option>
+        <option value="FRIDAY">Viernes</option>
+        <option value="SATURDAY">Sábado</option>
+      </select>
+    </div>
+
+    <!-- Hora de inicio -->
+    <div class="form-row">
+      <label for="startTime">Hora de inicio:</label>
+      <input type="time" id="startTime" [(ngModel)]="newLesson.startTime" name="startTime" required>
+    </div>
+
+    <!-- Hora de fin -->
+    <div class="form-row">
+      <label for="endTime">Hora de finalización:</label>
+      <input type="time" id="endTime" [(ngModel)]="newLesson.endTime" name="endTime" required>
+    </div>
+
+    <!-- Botones de Enviar y Cancelar -->
+    <div class="form-actions">
+      <button type="submit" [disabled]="!lessonForm.valid" style="margin-right: 10px;">
+        {{ selectedLesson ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button type="button" (click)="resetForm()">Cancelar</button>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="lessons.length > 0">
+  <h3>Lecciones de la Asignatura</h3>
+  <table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+      <tr>
+        <th (click)="onSort('id')">ID</th>
+        <th (click)="onSort('dayWeek')">Día</th>
+        <th (click)="onSort('startTime')">Hora de Inicio</th>
+        <th (click)="onSort('endTime')">Hora de Fin</th>
+        <th>Aula</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let lesson of lessons">
+        <td>{{ lesson.id }}</td>
+        <td>{{ lesson.dayWeek }}</td>
+        <td>{{ lesson.startTime }}</td>
+        <td>{{ lesson.endTime }}</td>
+        <td>
+          {{ lesson.classroomLesson ? lesson.classroomLesson.name : 'Falta asignarle un aula' }}
+          <!-- Botón para eliminar la relación de aula si existe un aula asignada -->
+          <button *ngIf="lesson.classroomLesson"
+                  type="button"
+                  class="btn btn-danger"
+                  style="margin-left: 8px; padding: 4px 4px; font-size: 12px;"
+                  (click)="deleteClassroomFromLesson(lesson.id)">
+            Eliminar aula
+          </button>
+        </td>
+        <td style="display: flex; gap: 10pax;">
+          <button (click)="onSelectLesson(lesson)">Editar</button>
+          <button (click)="onDeleteLesson(lesson.id)">Eliminar</button>
+          <button [routerLink]="['/lesson/info', lesson.id]">Más Info</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

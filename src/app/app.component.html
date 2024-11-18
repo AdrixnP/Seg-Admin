@@ -1,0 +1,39 @@
+<header>
+  <div class="header-container">
+    <a routerLink="/main">
+      <h1>{{ title }}</h1>
+    </a>
+  </div>
+  <div class="header-actions">
+    <a href="https://miportalu.unab.edu.co/" target="_blank"><button><img src="miportal.png" alt="Botón 1"></button></a>
+    <a href="https://www.unab.edu.co" target="_blank"><button><img src="unablogo.png" alt="Botón 2"></button></a>
+  </div>
+</header>
+
+<div class="container">
+  <nav id="navigation">
+    <ul>
+      <li>
+        <button class="nav-button" [routerLink]="'/user'">
+          <img src="usersicon.png" alt="Usuarios" width="48" height="48">
+          <span>Usuarios</span>
+        </button>
+      </li>
+      <li>
+        <button class="nav-button" [routerLink]="'/classroom'">
+          <img src="classroomicon.png" alt="Salones" width="48" height="48">
+          <span>Salones</span>
+        </button>
+      </li>
+      <li>
+        <button class="nav-button" [routerLink]="'/subject'">
+          <img src="subjecticon.png" alt="Salones" width="48" height="48">
+          <span>Materias</span>
+        </button>
+      </li>
+    </ul>
+  </nav>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+</div>

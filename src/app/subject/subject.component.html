@@ -1,0 +1,76 @@
+<div>
+  <h2>{{ selectedSubject ? 'Editar Asignatura' : 'Crear Nueva Asignatura' }}</h2>
+  <form (ngSubmit)="selectedSubject ? onUpdate(formSubject) : onCreate()" #subjectForm="ngForm">
+
+    <!-- NRC (Código de la asignatura) -->
+    <div class="form-row">
+      <label for="nrc">NRC:</label>
+      <input type="text" id="nrc" [(ngModel)]="formSubject.nrc" name="nrc" required>
+    </div>
+
+    <!-- Nombre de la Asignatura -->
+    <div class="form-row">
+      <label for="name">Nombre:</label>
+      <input type="text" id="name" [(ngModel)]="formSubject.name" name="name" required>
+    </div>
+
+    <!-- Botones de Enviar y Cancelar -->
+    <div class="form-actions">
+      <button type="submit" [disabled]="!subjectForm.form.valid" style="margin-right: 10px;">
+        {{ selectedSubject ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button type="button" (click)="resetForm()">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>
+
+<div>
+  <h2>Lista de Asignaturas</h2>
+  <table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+      <tr>
+        <th (click)="onSort('id')">
+          ID
+          <span *ngIf="sortColumn === 'id'">
+            <span *ngIf="sortDirection === 'asc'">↑</span>
+            <span *ngIf="sortDirection === 'desc'">↓</span>
+          </span>
+        </th>
+        <th (click)="onSort('nrc')">
+          NRC
+          <span *ngIf="sortColumn === 'nrc'">
+            <span *ngIf="sortDirection === 'asc'">↑</span>
+            <span *ngIf="sortDirection === 'desc'">↓</span>
+          </span>
+        </th>
+        <th (click)="onSort('name')">
+          Nombre
+          <span *ngIf="sortColumn === 'name'">
+            <span *ngIf="sortDirection === 'asc'">↑</span>
+            <span *ngIf="sortDirection === 'desc'">↓</span>
+          </span>
+        </th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let subject of subjects">
+        <td>{{ subject.id }}</td>
+        <td>{{ subject.nrc }}</td>
+        <td>{{ subject.name }}</td>
+        <td style="display: flex; gap: 10px;">
+          <!-- Edit Button -->
+          <button (click)="onEdit(subject)">Editar</button>
+
+          <!-- Delete Button -->
+          <button (click)="onDelete(subject.id)">Borrar</button>
+
+          <!-- View Subject Info Button -->
+          <button [routerLink]="['/subject/info', subject.id]">Más Info</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

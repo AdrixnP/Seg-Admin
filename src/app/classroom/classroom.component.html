@@ -1,0 +1,84 @@
+<div>
+  <h2>{{ selectedClassroom ? 'Editar Salón' : 'Crear Nuevo Salón' }}</h2>
+
+  <!-- Formulario para crear/editar salón -->
+  <div class="form-container">
+    <form (ngSubmit)="selectedClassroom ? onUpdate(formClassroom) : onCreate()" #classroomForm="ngForm">
+
+      <!-- Nombre del salón -->
+      <div class="form-row">
+        <label for="name">Nombre del salón:</label>
+        <input type="text" id="name" [(ngModel)]="formClassroom.name" name="name" required>
+      </div>
+
+      <!-- Capacidad del salón -->
+      <div class="form-row">
+        <label for="capacity">Capacidad:</label>
+        <input
+          type="number"
+          id="capacity"
+          [(ngModel)]="formClassroom.capacity"
+          name="capacity"
+          required
+          min="1"
+          #capacity="ngModel" />
+      </div>
+
+      <!-- Botones de Enviar y Cancelar -->
+      <div class="form-actions">
+        <button type="submit" [disabled]="!classroomForm.form.valid" style="margin-right: 10px;">
+          {{ selectedClassroom ? 'Actualizar' : 'Crear' }}
+        </button>
+        <button type="button" (click)="resetForm()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div>
+  <h2>Lista de Salones</h2>
+  <table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+      <tr>
+        <th (click)="onSort('id')">
+          ID
+          <span *ngIf="sortColumn === 'id'">
+            <span *ngIf="sortDirection === 'asc'">↑</span>
+            <span *ngIf="sortDirection === 'desc'">↓</span>
+          </span>
+        </th>
+        <th (click)="onSort('name')">
+          Nombre
+          <span *ngIf="sortColumn === 'name'">
+            <span *ngIf="sortDirection === 'asc'">↑</span>
+            <span *ngIf="sortDirection === 'desc'">↓</span>
+          </span>
+        </th>
+        <th (click)="onSort('capacity')">
+          Capacidad
+          <span *ngIf="sortColumn === 'capacity'">
+            <span *ngIf="sortDirection === 'asc'">↑</span>
+            <span *ngIf="sortDirection === 'desc'">↓</span>
+          </span>
+        </th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let classroom of classrooms">
+        <td>{{ classroom.id }}</td>
+        <td>{{ classroom.name }}</td>
+        <td>{{ classroom.capacity }}</td>
+        <td style="display: flex; gap: 10px;">
+          <!-- Edit Button -->
+          <button (click)="onEdit(classroom)">Editar</button>
+
+          <!-- Delete Button -->
+          <button (click)="onDelete(classroom.id)">Eliminar</button>
+
+          <button [routerLink]="['/classroom/info', classroom.id]">Más Info</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
